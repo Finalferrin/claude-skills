@@ -1,0 +1,6 @@
+# Shell scripts must keep LF or they will not run on macOS or Linux.
+*.sh text eol=lf
+# PowerShell is happy either way; keep it native for Windows editors.
+*.ps1 text eol=crlf
+*.py  text eol=lf
+*.md  text eol=lf
