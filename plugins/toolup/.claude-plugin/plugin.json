@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "toolup",
+  "version": "1.0.0",
+  "description": "Stops Claude reporting a missing tool and handing you a shopping list. Finds what is actually installed (including off PATH), installs free software itself, converts documents headlessly via Office, LibreOffice or a browser, and never installs anything needing an account without first telling you what signup involves.",
+  "author": {
+    "name": "Finalferrin",
+    "url": "https://github.com/Finalferrin"
+  },
+  "homepage": "https://github.com/Finalferrin/claude-skills",
+  "repository": "https://github.com/Finalferrin/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "environment",
+    "install",
+    "pdf",
+    "docx",
+    "convert",
+    "tooling",
+    "path",
+    "setup",
+    "libreoffice",
+    "office"
+  ]
+}

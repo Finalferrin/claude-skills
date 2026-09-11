@@ -1,0 +1,32 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-skills",
+  "description": "Portable skills for Claude Code.",
+  "owner": {
+    "name": "Finalferrin",
+    "url": "https://github.com/Finalferrin"
+  },
+  "plugins": [
+    {
+      "name": "toolup",
+      "source": "./plugins/toolup",
+      "description": "Stops Claude reporting a missing tool and handing you a shopping list. Finds what is actually installed (including off PATH), installs free software itself, converts documents headlessly via Office, LibreOffice or a browser, and never installs anything needing an account without first telling you what signup involves.",
+      "author": {
+        "name": "Finalferrin"
+      },
+      "category": "productivity",
+      "homepage": "https://github.com/Finalferrin/claude-skills",
+      "license": "MIT",
+      "keywords": [
+        "environment",
+        "install",
+        "pdf",
+        "docx",
+        "convert",
+        "tooling",
+        "path",
+        "setup"
+      ]
+    }
+  ]
+}

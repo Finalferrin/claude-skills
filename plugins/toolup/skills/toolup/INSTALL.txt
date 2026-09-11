@@ -1,0 +1,45 @@
+toolup — a Claude Code skill
+============================
+
+INSTALL
+
+Drop the "toolup" folder into your personal Claude skills directory:
+
+  Windows       %USERPROFILE%\.claude\skills\toolup
+  macOS/Linux   ~/.claude/skills/toolup
+
+Create the "skills" folder if it isn't there. Claude picks it up next session.
+
+That is the whole install. Nothing to run, nothing to configure.
+
+
+WHAT IT DOES
+
+Stops Claude handing you homework. Instead of "you'll need to install
+LibreOffice" or "open it in Word and save as PDF", it looks properly,
+installs free software itself, and only stops for things that need an
+account or a payment card.
+
+  - Converts docx/xlsx/pptx/odt/rtf/md/html to PDF, and PDF to docx,
+    headlessly. Uses Office if present, LibreOffice otherwise, a browser
+    for HTML, and installs LibreOffice itself if none exist.
+  - Checks whether a program is installed somewhere off PATH before ever
+    claiming it is missing.
+  - Installs free tools silently: jq, ripgrep, fd, ffmpeg, ImageMagick,
+    Tesseract, pandoc, sqlite3, 7-Zip, wget, make, Go, Java, Rust, and
+    the usual Python packages.
+  - Never installs anything needing a login without first telling you what
+    signup involves, including whether a payment card is required.
+    (AWS and Google Cloud require one even on free tiers. Cloudflare and
+    GitHub do not.)
+
+
+REQUIREMENTS
+
+Python 3.9 or newer. Everything else it installs for itself.
+Windows, macOS and Linux.
+
+
+SOURCE
+
+https://github.com/Finalferrin/claude-skills   (MIT)
