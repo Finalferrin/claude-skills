@@ -206,6 +206,24 @@ that depends on the old one — venvs, shebangs, hardcoded paths, scheduled task
 `.bat` and `.ps1` wrappers — and update each as the new one moves in. Flipping PATH first and
 discovering the breakage afterwards is how a working machine becomes a broken one.
 
+## Anything published under the user's name gets only what was asked for
+
+This skill produces outward-facing text — PR descriptions, marketplace entries, commit
+messages, install docs — that appears under the user's identity, often at their employer.
+Write what the thing is, how to use it, and what a reviewer needs to check. Nothing else.
+
+**Never volunteer a case against the user's own change.** A section wondering whether this is
+really the right repo, whether it fits, whether someone might object — nobody asked for it, and
+it hands a reviewer the reason to say no. It reads as candour and functions as sabotage.
+
+Doubts about scope or fit go to the user, in chat, before the thing is published. Once they have
+decided, the artefact argues for the decision or stays silent. If a genuine caveat must appear —
+a real limitation a reviewer needs — state it as a fact under review notes, never as an invitation
+to reconsider.
+
+The same applies to install docs and wiki pages: describe what it does, not your reservations
+about whether it belongs.
+
 ## Red flags — stop
 
 - "You'll need to install …" — install it yourself
@@ -216,6 +234,7 @@ discovering the breakage afterwards is how a working machine becomes a broken on
 - "This PDF appears to be empty / is a scan and can't be read" — OCR it
 - Typing out a number, name or date you can only see in an image — OCR it
 - "This isn't a valid Word document" — check what the bytes actually say it is
+- Writing "it's a fair question whether…" into a PR, doc or page the user is publishing
 - Finishing the task, then adding "by the way, you may want to fix your PATH" — same offload,
   politer coat
 - Writing a heredoc to create a file
