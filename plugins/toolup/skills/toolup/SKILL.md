@@ -1,6 +1,6 @@
 ---
 name: toolup
-description: Use when a task needs a CLI tool, library, program, font, converter or connector and you are about to say it is missing, unavailable, not installed, or unsupported — or before proposing a workaround, a fallback, a manual method, or asking the user to install or run anything. Also use before converting any document (docx/xlsx/pptx/pdf/html), before writing a file with a shell heredoc, and at the start of any terminal, scripting, data, image, audio or video task.
+description: Use when a task needs a CLI tool, library, program, font, converter or connector and you are about to say it is missing, unavailable, not installed, or unsupported — or before proposing a workaround, a fallback, a manual method, or asking the user to install or run anything. Also use before converting any document (docx/xlsx/pptx/pdf/html), before reading a scan, photo or a PDF whose pages have no text layer, before typing out any figure you can only see in an image, when a file will not open or looks corrupt or has the wrong extension, before writing a file with a shell heredoc, and at the start of any terminal, scripting, data, image, audio or video task.
 ---
 
 # Tool up
@@ -56,6 +56,7 @@ those exist, **installs LibreOffice and carries on**.
 | pptx, ppt, odp | pdf |
 | pdf | docx |
 | html, htm | pdf — needs no office suite at all |
+| mhtml saved as .doc (Confluence, Outlook) | html, txt, md, pdf — detected by content, not name |
 
 No window opens, no dialog appears, nothing lands in the user's recent files.
 
@@ -63,6 +64,89 @@ No window opens, no dialog appears, nothing lands in the user's recent files.
 - **Never ask the user to open an application and click Save As.** Every route is headless.
 - **Never complain about the format.** Legacy `.doc`, merged cells, scanned PDFs — that's the job.
 - Route missing? Add it to `convert.py`. Do not hand the user a task.
+
+## Reading a scan — never transcribe by eye
+
+```
+python skills/toolup/ocr.py IN [OUT]     image or PDF -> text
+python skills/toolup/ocr.py --which      what OCR this machine has, and what it would use
+```
+
+**When to reach for it**
+
+1. A PDF opens but `get_text()` returns nothing or near-nothing on a page — that page is an
+   image of text, not text. OCR it. Do not report the document as empty or unreadable.
+2. The input is a photo, a screenshot, a scan, a fax, a `.tif`.
+3. You are about to read numbers, names or dates off an image and type them out yourself.
+   **Don't.** Run the OCR and use its output.
+
+**Never retype what you can see in an image.** Reading a figure off a screenshot and typing it
+into a file, a table or a matrix row is a transcription with no record of where it came from,
+and a single wrong digit is invisible afterwards. Run the OCR, use its text, and say which
+engine produced it when the number matters.
+
+**Say what OCR is and is not.** OCR output is `Derived` material — a reproducible transformation
+of a source, never the source itself. Cite the original file alongside it. If a figure looks
+wrong, go back to the image; never "correct" OCR output silently into a record.
+
+### Why OCR and not just looking at the image
+
+You can read an image directly. For some jobs that is fine and faster. For others it is the
+wrong instrument, and the difference is not about capability — it is about what kind of claim
+the output can support.
+
+| | Reading it yourself | `ocr.py` |
+|---|---|---|
+| Same input twice | may differ | identical, every time |
+| A figure you report | your reading of it | a transcript that can be re-run and diffed |
+| Wrong value | looks exactly like a right one | still possible, but reproducible and checkable |
+| 400 pages | not realistically | a loop |
+| Sensitive records | goes through a model | stays on the machine |
+| Reading order in a table | inferred | derived from box coordinates |
+
+**Use OCR when the text is evidence.** Records, invoices, statements, census pages, transcripts,
+anything whose numbers or names end up in a file, a table or a citation. The value of OCR is not
+that it reads better — often it reads worse — it is that its output is a *transformation with a
+method*, which can be re-run, compared and audited. A figure you read off an image and typed is
+an assertion with no provenance, and if it is wrong nobody can tell by looking.
+
+**Read it yourself when the question is about the image, not the text in it.** What kind of
+document is this, is it signed, is the seal present, which of these three scans is legible,
+what is this diagram showing. Also handwriting — print-oriented OCR is poor at it, and your
+own reading is usually better, though it should be marked as a reading, not a transcript.
+
+**Best on a hard page: do both.** OCR for the verbatim text, your own reading to catch where the
+OCR clearly went wrong. Say which is which. Never quietly edit OCR output into what you think it
+should say — that produces a transcript nobody can trust and no way to tell which parts are
+machine-read.
+
+### The engine matters more than it looks
+
+`ocr.py` does not use the interpreter you happen to be running. It surveys every Python on the
+machine, finds which can run an OCR engine, and shells out to the one with the highest
+`rapidocr` version anywhere — because on one machine the newest version with a wheel for the
+default interpreter **silently dropped isolated single digits**. It read multi-digit numbers
+perfectly and lost every lone `3` and `2` in a table. Tesseract dropped the same digits. Only an
+older `rapidocr` on an older interpreter read them all.
+
+On a spreadsheet that is a curiosity. On a census page, a probate record or an invoice, it is a
+wrong fact that reads as correct, and nothing errors.
+
+**So: a capability that only works under an older interpreter is pinned, not dropped.** Keeping
+a second Python alive to host a working engine is the right trade, and "simplifying" by moving
+the capability onto the newest interpreter is a downgrade wearing the clothes of a cleanup.
+`TOOLUP_OCR_PYTHON` overrides the choice; `--which` shows what would be used and why.
+
+## The extension is not the format
+
+Sniff the bytes before believing the name. Exports lie constantly: Confluence and Outlook both
+save **MHTML with a `.doc` extension**, and handing one to Word gets "not a valid Word document"
+for a file that is perfectly readable HTML. `convert.py` checks the magic bytes first and routes
+MHTML to `.html`, `.txt`, `.md` or `.pdf`.
+
+The general rule: when a file will not open, check what it actually is before telling anyone it
+is corrupt, unsupported, or the wrong type. "This isn't a real Word file" is true and useless;
+"this is a Confluence export, here is the text" is the answer.
 
 ## Not on PATH is not missing
 
@@ -129,6 +213,9 @@ discovering the breakage afterwards is how a working machine becomes a broken on
 - Asking the human to run a command you could run
 - "X isn't available, so instead I'll…"
 - "I don't have access to Y" — did you check the deferred list?
+- "This PDF appears to be empty / is a scan and can't be read" — OCR it
+- Typing out a number, name or date you can only see in an image — OCR it
+- "This isn't a valid Word document" — check what the bytes actually say it is
 - Finishing the task, then adding "by the way, you may want to fix your PATH" — same offload,
   politer coat
 - Writing a heredoc to create a file

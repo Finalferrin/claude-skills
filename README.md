@@ -59,6 +59,18 @@ and being reported as missing.
 pandoc, sqlite3, 7-Zip, wget, make, Go, Java, Rust, plus the usual Python stack — silently, via
 winget, brew, apt, dnf or pacman.
 
+**Scans get read, not described.** `ocr.py` turns images and scanned PDFs into text — and it
+doesn't use whichever Python you happen to be running. It surveys every interpreter on the
+machine and picks the one with the best OCR engine, because on the machine this was built on the
+newest engine available for the default interpreter **silently dropped isolated single digits**.
+It read multi-digit numbers perfectly and lost every lone `3` and `2` in a table. So did
+Tesseract. Only an older engine on an older interpreter read them all. On an invoice or a census
+page that's a wrong figure that reads as correct, and nothing errors.
+
+**File extensions get checked, not believed.** Confluence and Outlook both export MHTML with a
+`.doc` extension. Handed to Word that's "not a valid Word document" — for a file that is
+perfectly readable HTML. `convert.py` sniffs the bytes and routes it properly.
+
 **Anything with a signup stops and tells you the truth first.** `wrangler`, `gh`, `aws` and
 `gcloud` are never installed quietly. You get the real signup steps, including — stated plainly —
 whether a payment card is required. **AWS and Google Cloud both want one even on their free
@@ -84,7 +96,18 @@ The skill runs itself, but the scripts work standalone:
 python plugins/toolup/skills/toolup/ensure.py --plan     what's missing and what each gap costs
 python plugins/toolup/skills/toolup/ensure.py --all      install every free, account-free tool
 python plugins/toolup/skills/toolup/convert.py in.docx out.pdf
+python plugins/toolup/skills/toolup/ocr.py scan.pdf out.txt
+python plugins/toolup/skills/toolup/ocr.py --which       what OCR this machine has
 ```
+
+### When OCR beats just looking at the image
+
+A model can read an image directly, and for "what is this document" that's the right call. OCR
+earns its place when the text is **evidence** — invoices, statements, records, anything whose
+numbers end up in a file or a citation. Same input gives identical output every time, it can be
+re-run and diffed, it scales to hundreds of pages, and it never leaves the machine. A figure read
+off an image and typed out is an assertion with no provenance; if it's wrong, nobody can tell by
+looking at it.
 
 ## Licence
 
