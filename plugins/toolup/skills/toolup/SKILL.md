@@ -7,6 +7,25 @@ description: Use when a task needs a CLI tool, library, program, font, converter
 
 **Go and get it. Do not file a request with the human.**
 
+## Agent runtime mapping
+
+This is a portable instruction file for Claude Code and Codex. The operating rules below apply
+to both. Use the current host's tool catalog and visible schema as authority for exact tool names,
+parameters, persistence, and permissions; never copy a Claude-specific tool name into Codex or
+the reverse.
+
+| Need | Claude Code | Codex |
+|---|---|---|
+| Personal skill location | `~/.claude/skills/<name>` | `~/.codex/skills/<name>` |
+| Plugin marketplace | This repository can be installed as a Claude plugin | Use the local skill directory; a Claude plugin manifest is not a Codex installation method |
+| Tool absent from the visible list | It may be deferred or require its schema to be loaded | It may be deferred, unavailable for this host, or require its schema to be loaded |
+| Writing a workspace file | Use the host's file-editing facility | Use the host's file-editing facility (normally `apply_patch`) |
+| Free installation or configuration change | Proceed only within the host's permission model | Proceed only within the host's permission model; request an approval when the host requires it |
+
+For either agent, a visible tool schema and the host's permission boundary outrank any general
+wording in this skill. A permission prompt is not a reason to call a free tool unavailable or to
+hand the work back to the user.
+
 The failure this exists to stop: hitting a gap, announcing it, and handing the user a shopping
 list — when the thing is already installed somewhere you didn't look, or is a free download you
 could have fetched in the time it took to write the complaint.
@@ -191,7 +210,7 @@ file was written when nothing ran at all. **No size exception. Not for four line
 
 | Symptom | Reality | Action |
 |---|---|---|
-| Tool absent from your tool list | **Deferred** — schema unloaded, tool is live | Load it. Never call it unavailable. |
+| Tool absent from your tool list | **Deferred or host-specific** — its schema may be unloaded, or the current host may not provide it | Inspect the current tool catalog and load its schema when available. Do not call it unavailable without checking. |
 | Server listed as needing auth | **Unauthenticated** — capability exists, no token | Name it; say where authorization happens. |
 | Server listed as failed to connect | **Broken** — configured, unreachable | Name the server and the error, then check whether a CLI covers the same ground. |
 | `command not found` | **Absent — maybe** | Check off-PATH locations first. Then install it. |

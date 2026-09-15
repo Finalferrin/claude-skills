@@ -1,21 +1,24 @@
-toolup — a Claude Code skill
-============================
+toolup — a Claude Code and Codex skill
+======================================
 
 INSTALL
 
-Drop the "toolup" folder into your personal Claude skills directory:
+Use the marketplace in Claude Code, or install the same folder locally for either agent:
 
-  Windows       %USERPROFILE%\.claude\skills\toolup
-  macOS/Linux   ~/.claude/skills/toolup
+  Claude Code, Windows       %USERPROFILE%\.claude\skills\toolup
+  Claude Code, macOS/Linux   ~/.claude/skills/toolup
+  Codex, Windows             %USERPROFILE%\.codex\skills\toolup
+  Codex, macOS/Linux         ~/.codex/skills/toolup
 
-Create the "skills" folder if it isn't there. Claude picks it up next session.
+Create the directory if it is missing, then start a new Claude Code session or Codex task.
+For a managed Codex installation, use its configured skill directory instead.
 
 That is the whole install. Nothing to run, nothing to configure.
 
 
 WHAT IT DOES
 
-Stops Claude handing you homework. Instead of "you'll need to install
+Stops an agent handing you homework. Instead of "you'll need to install
 LibreOffice" or "open it in Word and save as PDF", it looks properly,
 installs free software itself, and only stops for things that need an
 account or a payment card.
