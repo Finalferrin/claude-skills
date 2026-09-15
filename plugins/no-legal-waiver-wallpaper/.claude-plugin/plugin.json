@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "no-legal-waiver-wallpaper",
+  "version": "1.0.0",
+  "description": "Strips the caveat sections, hedges and self-undermining closers from anything an agent writes for other people to read. Doubt goes to the user in chat; the document carries what was asked for and nothing else.",
+  "author": {
+    "name": "Finalferrin",
+    "url": "https://github.com/Finalferrin"
+  },
+  "homepage": "https://github.com/Finalferrin/claude-skills",
+  "repository": "https://github.com/Finalferrin/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "hedging",
+    "caveats",
+    "disclaimer",
+    "memo",
+    "report",
+    "documentation",
+    "tone",
+    "prose"
+  ]
+}

@@ -1,17 +1,35 @@
-# claude-skills
+# agent-skills
 
-Portable skills for Claude Code, distributed as a plugin marketplace.
+Portable agent skills for Claude Code and Codex. Claude Code can install this repository as a
+plugin marketplace; Codex uses the same `SKILL.md` and scripts as a native local skill.
 
 ## Install
 
-**In Claude Code, two commands:**
+### Claude Code
+
+**Two commands:**
 
 ```
 /plugin marketplace add Finalferrin/claude-skills
 /plugin install toolup@claude-skills
+/plugin install no-legal-waiver-wallpaper@claude-skills
 ```
 
 That's it. Same mechanism as any other plugin — it stays up to date and uninstalls cleanly.
+
+### Codex
+
+Clone the repository, then run the installer for Codex:
+
+```powershell
+git clone https://github.com/Finalferrin/claude-skills
+Set-Location claude-skills
+.\install.ps1 -Target Codex
+```
+
+That copies each skill to `%USERPROFILE%\.codex\skills\`. Start a new Codex task after
+installation so its skill catalog refreshes. Codex installations managed by an organization may
+use a different configured skill directory; use that directory when one is provided.
 
 <details>
 <summary>Other ways, if the marketplace isn't an option</summary>
@@ -21,13 +39,17 @@ That's it. Same mechanism as any other plugin — it stays up to date and uninst
 ```bash
 git clone https://github.com/Finalferrin/claude-skills
 cd claude-skills
-./install.sh          # Windows: powershell -NoProfile -File install.ps1
+./install.sh --target both          # Windows: .\install.ps1 -Target Both
 ```
 
-**Or by hand** — drop the folder `plugins/toolup/skills/toolup` into `~/.claude/skills/`
-(`%USERPROFILE%\.claude\skills\` on Windows). Nothing to configure.
+**Or by hand** — drop `plugins/toolup/skills/toolup` into either:
 
-Claude picks skills up on the next session.
+| Agent | Windows | macOS/Linux |
+|---|---|---|
+| Claude Code | `%USERPROFILE%\.claude\skills\toolup` | `~/.claude/skills/toolup` |
+| Codex | `%USERPROFILE%\.codex\skills\toolup` | `~/.codex/skills/toolup` |
+
+Start a new session or task after manual installation.
 </details>
 
 Requires Python 3.9+. Everything else the skill installs for itself. Windows, macOS, Linux.
@@ -36,7 +58,7 @@ Requires Python 3.9+. Everything else the skill installs for itself. Windows, ma
 
 ## `toolup`
 
-**Stops Claude handing you homework.**
+**Stops an agent handing you homework.**
 
 You ask for a document as a PDF. It tells you to install LibreOffice. Or to open it in Word and
 save it yourself. Or that some tool isn't available, followed by a clunky workaround.
@@ -76,7 +98,7 @@ perfectly readable HTML. `convert.py` sniffs the bytes and routes it properly.
 whether a payment card is required. **AWS and Google Cloud both want one even on their free
 tiers.** Cloudflare and GitHub don't.
 
-### Rules it holds Claude to
+### Rules it holds an agent to
 
 - Never "you'll need to install X" — install it, or use what's already there
 - Never ask you to open an app and click through a dialog
