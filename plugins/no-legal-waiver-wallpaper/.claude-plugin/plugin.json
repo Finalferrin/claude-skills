@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "no-legal-waiver-wallpaper",
-  "version": "1.0.0",
-  "description": "Strips the caveat sections, hedges and self-undermining closers from anything an agent writes for other people to read. Doubt goes to the user in chat; the document carries what was asked for and nothing else.",
+  "version": "1.1.0",
+  "description": "Two skills for writing that other people or agents will read. no-legal-waiver-wallpaper strips the caveat sections, hedges and self-undermining closers from anything an agent writes for someone else; doubt goes to the user in chat, the document carries what was asked for and nothing else. pseudoprompt turns a long prose ask into a pseudocode prompt in one copy-paste block, carrying what the paragraph said and nothing else.",
   "author": {
     "name": "Finalferrin",
     "url": "https://github.com/Finalferrin"
@@ -19,6 +19,9 @@
     "report",
     "documentation",
     "tone",
-    "prose"
+    "prose",
+    "prompt",
+    "pseudocode",
+    "prompt-writing"
   ]
 }

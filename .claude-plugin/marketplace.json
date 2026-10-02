@@ -31,7 +31,7 @@
     {
       "name": "no-legal-waiver-wallpaper",
       "source": "./plugins/no-legal-waiver-wallpaper",
-      "description": "Strips the caveat sections, hedges and self-undermining closers from anything an agent writes for other people to read. Doubt goes to the user in chat; the document carries what was asked for and nothing else.",
+      "description": "Two skills for writing that other people or agents will read. no-legal-waiver-wallpaper strips the caveat sections, hedges and self-undermining closers from anything an agent writes for someone else; doubt goes to the user in chat. pseudoprompt turns a long prose ask into a pseudocode prompt in one copy-paste block, carrying what the paragraph said and nothing else.",
       "author": {
         "name": "Finalferrin"
       },
@@ -45,7 +45,9 @@
         "disclaimer",
         "memo",
         "report",
-        "prose"
+        "prose",
+        "prompt",
+        "pseudocode"
       ]
     }
   ]

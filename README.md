@@ -131,6 +131,35 @@ re-run and diffed, it scales to hundreds of pages, and it never leaves the machi
 off an image and typed out is an assertion with no provenance; if it's wrong, nobody can tell by
 looking at it.
 
+## `no-legal-waiver-wallpaper`
+
+One plugin, two skills, one rule: **what you hand over carries what was asked for and nothing
+else.** Doubt, caveats and questions go to you, on screen, before the thing exists.
+
+### `no-legal-waiver-wallpaper`
+
+Fires before an agent writes anything another person will read: a memo, report, PR, README,
+email. Strips the Caveats section, the "treat as directional", the "proceed only if", the
+closer that reopens the question. A limitation the reader needs becomes one sentence of fact
+where the fact lives. The page ends on the decision or the next step.
+
+### `pseudoprompt`
+
+Fires when you say "make this a prompt", "pseudocode this" or "turn this into a prompt".
+
+You write a long ask as one paragraph. The skill rewrites it as a pseudocode prompt in one
+copy-paste block: what done looks like, what is in and out, your terms pinned so the agent
+uses your names, every "don't" as a NEVER before the steps, the steps in your order, and what
+comes back. Capitals for the logic, one rule per line, indented under its condition.
+
+What it will not do is improve your ask. Anything you did not say is not in the block. Where
+the paragraph is silent on something the block needs, you get `<A PLACEHOLDER>` in the block
+and the question that fills it on screen, never a reasonable default. Typo readings and
+unclear words are listed on screen too, one line each.
+
+The block is for pasting into any agent. It carries no instructions about modes, plans or
+hand-offs.
+
 ## Licence
 
 MIT.
